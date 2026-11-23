@@ -17,9 +17,17 @@ Full plan, cycles, and cut list: [ROADMAP.md](ROADMAP.md).
   to a fixed budget of about 170h, ending mid-May 2027, as cycles with a cut
   list.
 
+- 2026-11-23: Imported the v1 history from the ChatGPT chat into
+  [HISTORY.md](HISTORY.md) and checked it against the code. Found that the
+  privacy-policy URLs return 404.
+
 ## Next step
-1. **Cycle 0:** add FocusTicker to the resume, with the link and the real
-   store numbers, and check which first-year programs are still open.
+0. **Urgent:** the store's privacy-policy link 404s (confirmed). The file is
+   on GitHub, so turn on GitHub Pages (Settings → Pages → `main` / root). Then fix the data-disclosure boxes
+   in the dashboard (see HISTORY.md).
+1. **Cycle 0:** update the resume (60+ → 80 users, 5.0★) and check which
+   first-year programs are still open. Then the v1 explain-back, starting
+   with `refreshQueue`.
 2. **Cycle 1:** write the spec for the attention timer: color thresholds,
    pulse interval, and soft-limit behavior. Then Claude proposes the design
    and the Chrome APIs before any code.

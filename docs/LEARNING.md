@@ -13,6 +13,10 @@ it in tutor mode.
 | Topic | Explain | Errors | Write | Mode now |
 |---|---|---|---|---|
 | Extension architecture (my own code) | | | | n/a |
+| v1: `refreshQueue` and race conditions | | | | tutor |
+| v1: `storage.session` + checkpoint split | | | | tutor |
+| v1: message passing (`return true`, polling) | | | | tutor |
+| v1: Shadow DOM + drag/pointer capture | | | | tutor |
 | HTTP: GET vs. POST, status codes, JSON | | | | tutor |
 | SQL: SELECT / WHERE / ORDER BY | | | | tutor |
 | SQL: INSERT / UPDATE / DELETE | | | | tutor |

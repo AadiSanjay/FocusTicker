@@ -33,7 +33,7 @@ date.
 
 | Cycle | When (approx.) | Appetite | Ships |
 |---|---|---|---|
-| 0. Resume now | this week | 1–2h | FocusTicker on the resume as it is; apply to what's still open |
+| 0. Resume + v1 explain-back | this week → early Dec | ~8h | Fix the privacy-policy link; update the resume numbers; explain v1's AI-written parts myself |
 | 1. Attention timer | now → mid-Dec | ~16h | **v1.1**: color shift, pulse, soft limit, settings |
 | 2. Local history | winter break | ~30h | **v1.2**: stats popup, 30–90 days of history, correct midnight handling, onboarding |
 | 3. Custom sites | late Jan → Feb | ~24h | **v1.3**: custom sites via optional permissions, x.com fix. SQLBolt alongside |
@@ -61,7 +61,16 @@ permission check before each release.
 
 ---
 
-## Cycle 0: Resume now (1–2h)
+## Cycle 0: Resume + v1 explain-back (~8h)
+- **First, fix the privacy policy link.** The GitHub Pages URL returns 404
+  (see HISTORY.md). Check which URL the store dashboard uses, and publish the
+  policy as a real page.
+- **v1 explain-back** (tutor mode, ~5h). These parts were mostly
+  ChatGPT-written but appear on my resume. For each one, I explain it out
+  loud, predict what breaks if it's removed, then remove it and check:
+  `refreshQueue`, `storage.session` + the checkpoint split, the `await`
+  ordering, `WINDOW_ID_NONE` handling, `return true` in the message listener,
+  Shadow DOM, and pointer capture in the drag code.
 - Bullet: *"Built and shipped FocusTicker, a Chrome extension with 79 users
   (5.0★) that tracks active time on social sites"*, with the name linked to
   the store page.
@@ -79,9 +88,25 @@ permission check before each release.
 4. **Pulse** every N minutes (default 10), using `transform` only, so it never
    shifts page layout. Respects `prefers-reduced-motion`. Test on YouTube.
 5. **Soft limit** (first on the cut list for this cycle). It never blocks.
-6. Ship, then reply to the people who asked for it.
+6. **x.com support** (my spec, 2026-11-23): X should be on for new installs,
+   and existing users should get a "what's new" summary. Design still to
+   decide (see the trade-off below).
+7. **What's new page:** `runtime.onInstalled` with reason `"update"` opens a
+   one-screen summary of new features. Only for feature releases, never for
+   patch fixes, to stay non-intrusive.
+8. Ship, then reply to the people who asked for it.
 
-No new permissions.
+**x.com trade-off (decide before coding):**
+- *Static manifest:* new installs get X automatically. But the update adds a
+  host warning, so Chrome likely **disables FocusTicker for all existing users
+  until they accept**, and some won't.
+- *Optional permission:* the welcome page (new installs) and the what's-new
+  page (existing users) each get a "Turn on X" button that calls
+  `permissions.request`. That's one click, and nobody gets disabled. It needs
+  `optional_host_permissions` + `scripting`. Verify `scripting` shows no
+  warning. Cycle 3's custom sites reuse the same mechanism.
+- Before shipping either one, preview the permission warnings using Chrome's
+  documented method.
 
 ## Cycle 2: Local history → v1.2 (~30h, winter break)
 1. **Pull the time math into pure functions** (no Chrome API calls) and add
@@ -104,7 +129,7 @@ No new permissions.
    no new install warning**; if it did, all 79 installs would be disabled
    until users accept.
 3. One source of truth for the site list.
-4. x.com support (needs a spec).
+4. Reuse the optional-permission flow from x.com (Cycle 1).
 5. **Side track:** SQLBolt (about 8h over this cycle) plus a few curl requests
    against a toy API. This replaces the old Phase 0.
 
@@ -158,5 +183,6 @@ forced retries. If this isn't working by early April, cut, don't extend.
 ## Not code (reminders)
 - Record a 15–30s GIF of the timer for the store listing.
 - Rewrite the store description so its first lines say what happens in the
-  first minute.
+  first minute. **No list of site brand names**; that got v1 rejected for
+  keyword spam.
 - Track installs ÷ listing views before and after the listing changes.
